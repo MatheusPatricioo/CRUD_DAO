@@ -8,8 +8,15 @@ class UsuarioDaoMysql implements UsuarioDAO {
         $this->pdo = $driver;
     }
 
+    //o metodo add é o funcionario da livraria que cadastra os clientes :|)
     public function add(Usuario $u){
+        $sql = $this->pdo->prepare("INSERT INTO usuarios (nome, email) VALUES (:nome, :email)");
+        $sql->bindValue(':nome', $u->getNome());
+        $sql->bindValue(':email', $u->getEmail());
+        $sql->execute();
 
+        $u->setId( $this->pdo->lastInsertId() );
+        return $u;
 
     }
 
@@ -20,7 +27,7 @@ class UsuarioDaoMysql implements UsuarioDAO {
         if ($sql->rowCount() > 0){
             $data = $sql->fetchALL();
 
-//cria um objeto, preenche ele e joga no array
+    //cria um objeto, preenche ele e joga no array
             foreach($data as $item) {
                 $u = new Usuario ();// obj do tipo usuario
                 $u->setId($item['ID']);
@@ -34,12 +41,44 @@ class UsuarioDaoMysql implements UsuarioDAO {
         return $array;
     }
 
+    //p findByEmail é como se fosse um bibliotecario eficiente : )
     public function findByEmail($email){
+        $sql = $this->pdo->prepare("SELECT * FROM usuarios WHERE email =:email");
+        $sql->bindValue(':email', $email);
+        $sql->execute();
+        if($sql->rowCount() > 0){
+            $data = $sql->fetch();
+
+            $u = new Usuario (); 
+            $u->setId($data['ID']);
+            $u->setNome($data['Nome']);
+            $u->setEmail($data['email']);
+
+            return $u;
+
+        } else {
+            return false;
+        }
         
     }
 
 
     public function findById($id){
+        $sql = $this->pdo->prepare("SELECT * FROM usuarios WHERE ID =:ID");
+        $sql->bindValue(':ID', $id);
+        $sql->execute();
+        if($sql->rowCount() > 0){
+            $data = $sql->fetch();
+
+            $u = new Usuario (); 
+            $u->setId($data['ID']);
+            $u->setNome($data['Nome']);
+            $u->setEmail($data['email']);
+
+            return $u;
+        } else {
+            return false;
+        }
 
     }
 
@@ -49,6 +88,6 @@ class UsuarioDaoMysql implements UsuarioDAO {
 
     public function delete(Usuario $id){
 
-    }
+        }
 
-}
+    }

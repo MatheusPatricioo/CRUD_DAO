@@ -30,6 +30,7 @@ class Usuario {
 interface UsuarioDAO {// aqui vamos criar basicamente o CRUD;
     public function add(Usuario $u); //recebe um objeto da classe usuario
     public function findALL(); // pegue todo mundo;
+    public function findByEmail($email);
     public function findById($id);//quero encontrar 1 cara só
     //public function findByOQ QUERO ENCONTRAR(OQ QUERO ENCONTRAR);
     // esse findALGUMA COISA, é pra encontrar um item por aquele "id";

@@ -10,7 +10,7 @@ $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL); // Obtém o e
 
 if($name && $email) {
 
-    if($usuarioDao = new UsuarioDaoMysql ($email) === false) {
+    if($usuarioDao->findByEmail($email) === false) {
         $novoUsuario = new Usuario();
         $novoUsuario->setNome($name);
         $novoUsuario->setEmail($email);
