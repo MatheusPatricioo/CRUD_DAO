@@ -10,7 +10,8 @@ $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL); // Obtém o e
 
 
 if($id && $name && $email) {
-    $usuario = $usuarioDao->findById($id);
+    $usuario = new Usuario();
+    $usuario-> setId($id);
     $usuario->setNome($name);
     $usuario->setEmail($email);
 

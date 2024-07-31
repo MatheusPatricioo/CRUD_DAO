@@ -1,6 +1,8 @@
 <?php
-// Inclui o arquivo de configuração do banco de dados
 require 'config.php';
+require 'dao/UsuarioDaoMysql.php';
+
+$usuarioDao = new UsuarioDaoMysql ($pdo);
 
 
 // Obtém o ID do usuário enviado pela URL
